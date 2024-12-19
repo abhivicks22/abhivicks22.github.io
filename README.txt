@@ -1,1 +1,1 @@
-this is my personal portfolio website.
+Hi there, this is my personal portfolio website.
