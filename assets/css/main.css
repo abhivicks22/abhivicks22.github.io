@@ -700,6 +700,22 @@ input, select, textarea {
 
 		}
 
+		.image-container {
+			display: block;
+			margin: 0 auto;
+			max-width: 30%;  /* Reduced size to 30% of its container */
+			text-align: center;
+			overflow: hidden;
+		}
+
+		.image-container img {
+			width: 100%;
+			height: auto;
+			border-radius: 50%;  /* This makes the image circular */
+			border: 2px solid #ffffff;  /* Adding a white border around the circular image */
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  /* Adding a subtle shadow for depth */
+		}
+
 /* List */
 
 	ol {
