@@ -1652,3 +1652,57 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+/* Custom styles for the intro section */
+#intro {
+    text-align: left;
+    max-width: 45rem !important;
+}
+
+#intro h2.major {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2.25rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+#intro .image-container {
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+    max-width: 25%;
+}
+
+#intro p:not(.indented-paragraph) {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.indented-paragraph {
+    text-align: justify;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.highlight {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+@media screen and (max-width: 736px) {
+    #intro .image-container {
+        float: none;
+        margin: 0 auto 1.5rem auto;
+        max-width: 40%;
+    }
+    
+    #intro {
+        text-align: center;
+    }
+    
+    .indented-paragraph {
+        text-align: left;
+    }
+}
