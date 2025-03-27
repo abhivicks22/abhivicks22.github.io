@@ -1,0 +1,145 @@
+/* 
+   Performance optimizations for smoother transitions and reduced layout shifts
+*/
+
+/* Optimize for content-visibility */
+.work-experience, 
+.project-card, 
+.contact-item {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
+}
+
+/* Improve font rendering */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Pre-define layout space for images to prevent layout shifts */
+.image-container img {
+    aspect-ratio: 1 / 1;
+}
+
+/* Eliminate render-blocking resources */
+@media screen {
+    .preload * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Reduce CPU usage during animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Prevent layout shifts by locking positions during transitions */
+.is-switching {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Force GPU acceleration on all transitions */
+#header .logo,
+#header nav ul li a,
+.button,
+.project-card,
+.work-experience,
+.skill-tag,
+.icons li a,
+#bg:before,
+#bg:after {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Optimize scroll performance */
+html, body {
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+}
+
+/* Prevent FOUT (Flash of Unstyled Text) */
+.wf-loading {
+    opacity: 0;
+}
+
+.wf-active, .wf-inactive {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Fix for transition smoothness - end of file */
+.transition-smoothest {
+    transition-timing-function: cubic-bezier(0.1, 0.1, 0.25, 0.9) !important;
+    animation-timing-function: cubic-bezier(0.1, 0.1, 0.25, 0.9) !important;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    perspective: 1000px;
+}
+
+/* Prevent transition conflicts */
+.is-switching * {
+    animation-play-state: paused !important;
+    transition-property: none !important;
+}
+
+/* Anti-shake stabilization */
+#wrapper, #header, #main, #footer {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+/* Stop transitions completely during page switch */
+.is-switching #main article,
+.is-switching #header,
+.is-switching #footer {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Additional fixes for smooth transitions */
+#main article {
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+    transition-delay: 0.1s !important;
+}
+
+#main article.active {
+    transition: opacity 0.5s ease, transform 0.5s ease !important;
+    transition-delay: 0.1s !important;
+}
+
+#header, #footer {
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s !important;
+}
+
+/* Reduce transition times for smoother appearance */
+body.is-article-visible #header,
+body.is-article-visible #footer {
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s !important;
+}
+
+/* Anti-jitter for modals */
+.article-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* Ensure fixed position elements remain stable */
+#wrapper:before, #bg:before {
+    will-change: opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+} 
