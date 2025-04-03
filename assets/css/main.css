@@ -701,19 +701,94 @@ input, select, textarea {
 		}
 
 		.image-container {
-			display: block;
-			margin: 0 auto;
-			max-width: 30%;  /* Reduced size to 30% of its container */
 			text-align: center;
-			overflow: hidden;
+			margin-bottom: 2rem;
+			position: relative;
+			z-index: 2;
 		}
 
 		.image-container img {
-			width: 100%;
-			height: auto;
-			border-radius: 50%;  /* This makes the image circular */
-			border: 2px solid #ffffff;  /* Adding a white border around the circular image */
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  /* Adding a subtle shadow for depth */
+			width: 220px;
+			height: 220px;
+			object-fit: cover;
+			border-radius: 50%;
+			border: 4px solid rgba(255, 255, 255, 0.3);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3);
+			filter: brightness(1.1) contrast(1.15) saturate(1.1);
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: crisp-edges;
+			transform: translateZ(0);
+			backface-visibility: hidden;
+			transition: all 0.4s ease;
+			max-width: none !important;
+		}
+
+		.image-container img:hover {
+			transform: scale(1.08);
+			border-color: #55cdfc;
+			box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.4);
+			filter: brightness(1.15) contrast(1.2) saturate(1.15);
+		}
+
+		.image-container::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 230px;
+			height: 230px;
+			background: radial-gradient(circle, rgba(0,0,0,0) 45%, rgba(0,0,0,0.2) 100%);
+			border-radius: 50%;
+			z-index: 1;
+		}
+
+		.enhanced-image {
+			position: relative;
+			z-index: 3;
+		}
+
+		.enhanced-image::after {
+			content: '';
+			position: absolute;
+			top: -8px;
+			left: -8px;
+			right: -8px;
+			bottom: -8px;
+			background: transparent;
+			border-radius: 50%;
+			box-shadow: 0 0 25px rgba(85, 205, 252, 0.4);
+			z-index: -1;
+			opacity: 0;
+			transition: opacity 0.4s ease;
+		}
+
+		.enhanced-image:hover::after {
+			opacity: 1;
+		}
+
+		@media screen and (max-width: 736px) {
+			.image-container img {
+				width: 200px;
+				height: 200px;
+			}
+			
+			.image-container::before {
+				width: 210px;
+				height: 210px;
+			}
+		}
+
+		@media screen and (max-width: 480px) {
+			.image-container img {
+				width: 200px;
+				height: 200px;
+			}
+			
+			.image-container::before {
+				width: 210px;
+				height: 210px;
+			}
 		}
 
 /* List */
@@ -1689,8 +1764,8 @@ input, select, textarea {
 
 #intro .image-container {
     float: right;
-    margin: 0 0 1rem 1.5rem;
-    max-width: 25%;
+    margin: 0 0 1.5rem 2rem;
+    max-width: 30%;
 }
 
 #intro p:not(.indented-paragraph) {
@@ -1714,8 +1789,8 @@ input, select, textarea {
 @media screen and (max-width: 736px) {
     #intro .image-container {
         float: none;
-        margin: 0 auto 1.5rem auto;
-        max-width: 40%;
+        margin: 0 auto 2rem auto;
+        max-width: none;
     }
     
     #intro {
@@ -1748,25 +1823,55 @@ input, select, textarea {
 
 .work-experience h3 {
     margin-bottom: 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     color: #ffffff;
+    letter-spacing: 0.05rem;
+    position: relative;
+    display: inline-block;
+}
+
+.work-experience h3:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(85, 205, 252, 0.8), rgba(85, 205, 252, 0));
 }
 
 .job-title {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
     font-style: italic;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.03rem;
 }
 
 .job-description {
-    list-style-type: circle;
-    padding-left: 1.25rem;
+    list-style-type: none;
+    padding-left: 0.25rem;
 }
 
 .job-description li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.9rem;
     line-height: 1.5;
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: 0.95rem;
+}
+
+.job-description li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #55cdfc;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.job-description li:last-child {
+    margin-bottom: 0;
 }
 
 .connect-text {
@@ -1944,4 +2049,43 @@ input, select, textarea {
     .connect-heading:before, .connect-heading:after {
         width: 20%;
     }
+}
+
+/* Additional improvements for text readability around image */
+#intro p {
+    margin-top: 1.5rem;
+    line-height: 1.8;
+}
+
+#intro .indented-paragraph {
+    text-indent: 1em;
+    margin-bottom: 1.2em;
+}
+
+/* Improved Work Experience Styling */
+.work-skills {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.75rem 0 1.25rem;
+    gap: 12px;
+}
+
+.skill-tag {
+    display: inline-block;
+    background-color: rgba(27, 31, 34, 0.8);
+    color: #55cdfc;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 0;
+    border: 1px solid #55cdfc;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.skill-tag:hover {
+    background-color: rgba(85, 205, 252, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
