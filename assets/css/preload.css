@@ -20,6 +20,13 @@ html {
 /* Pre-define layout space for images to prevent layout shifts */
 .image-container img {
     aspect-ratio: 1 / 1;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    image-rendering: high-quality;
+    -ms-interpolation-mode: bicubic;
 }
 
 /* Eliminate render-blocking resources */
@@ -142,4 +149,40 @@ body.is-article-visible #footer {
     will-change: opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
+}
+
+/* Special rendering mode for higher quality images */
+img.enhanced-image {
+    animation: image-enhance 0.8s ease-out forwards;
+}
+
+@keyframes image-enhance {
+    0% {
+        filter: blur(5px) brightness(0.9);
+        transform: scale(0.95);
+    }
+    70% {
+        filter: blur(0) brightness(1.1);
+        transform: scale(1.02);
+    }
+    100% {
+        filter: blur(0) brightness(1.05);
+        transform: scale(1);
+    }
+}
+
+/* Improve image display with adaptive techniques */
+@media (-webkit-min-device-pixel-ratio: 2), 
+       (min-resolution: 192dpi) {
+    .image-container img {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Fix image quality when transitioning */
+.is-article-visible .image-container img {
+    transition: transform 0.5s ease-out, 
+                filter 0.5s ease-out, 
+                border-color 0.5s ease-out, 
+                box-shadow 0.5s ease-out;
 } 

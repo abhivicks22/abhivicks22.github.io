@@ -67,6 +67,71 @@
 	// Apply consistent easing
 	applyConsistentEasing();
 
+	// Enhanced image processing for better quality
+	function enhanceProfileImage() {
+		const profileImage = document.querySelector('.image-container img');
+		if (profileImage) {
+			// Make sure image is fully loaded
+			if (profileImage.complete) {
+				applyImageEnhancements(profileImage);
+			} else {
+				profileImage.onload = function() {
+					applyImageEnhancements(profileImage);
+				};
+			}
+
+			// Preload image with high quality settings
+			const preloadImg = new Image();
+			preloadImg.src = profileImage.src;
+			preloadImg.onload = function() {
+				// Replace with higher quality version when loaded
+				setTimeout(() => {
+					profileImage.src = preloadImg.src;
+					profileImage.style.opacity = 1;
+				}, 100);
+			};
+		}
+	}
+	
+	function applyImageEnhancements(img) {
+		// Add a subtle fade-in effect
+		img.style.opacity = 0;
+		
+		// Apply CSS for better rendering
+		img.style.willChange = 'transform, opacity';
+		img.style.imageRendering = '-webkit-optimize-contrast';
+		
+		// Force browser to render at higher quality
+		img.setAttribute('importance', 'high');
+		
+		setTimeout(function() {
+			img.style.transition = 'opacity 0.6s ease-in-out, transform 0.4s ease-out';
+			img.style.opacity = 1;
+			// Add subtle entrance animation
+			img.style.transform = 'scale(1.01)';
+			setTimeout(() => {
+				img.style.transform = 'scale(1)';
+			}, 300);
+		}, 100);
+		
+		// Add class for enhanced styling
+		img.classList.add('enhanced-image');
+	}
+	
+	// Call image enhancement on page load
+	enhanceProfileImage();
+
+	// Reapply enhancements when article becomes visible
+	$main_articles.each(function() {
+		var $this = $(this);
+		
+		if ($this.attr('id') === 'intro') {
+			$this.on('DOMNodeInserted', function(e) {
+				enhanceProfileImage();
+			});
+		}
+	});
+
 	// Breakpoints.
 		breakpoints({
 			xlarge:   [ '1281px',  '1680px' ],
